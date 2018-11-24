@@ -18,7 +18,7 @@ mf.effect.Size = class extends mf.Effect {
             super();
             this.name('Size');
             this.prmMap(['width', 'height']);
-            this.prmOpt(po, p1);
+            this.prmOpt(po, p2);
         } catch (e) {
             console.error(e.stack);
             throw e;
