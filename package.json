@@ -1,0 +1,22 @@
+{
+  "name": "mofron-effect-size",
+  "version": "0.0.2",
+  "description": "size effect for mofron",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simpart/mofron-effect-size.git"
+  },
+  "keywords": [
+    "front-end"
+  ],
+  "author": "simparts",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/simpart/mofron-effect-size/issues"
+  },
+  "homepage": "https://github.com/simpart/mofron-effect-size#readme"
+}
