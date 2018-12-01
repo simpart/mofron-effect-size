@@ -1,6 +1,6 @@
 {
   "name": "mofron-effect-size",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "size effect for mofron",
   "main": "index.js",
   "scripts": {

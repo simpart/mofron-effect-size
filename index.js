@@ -24,6 +24,7 @@ mf.effect.Size = class extends mf.Effect {
             throw e;
         }
     }
+
     
     /**
      * enable size effect
@@ -33,10 +34,10 @@ mf.effect.Size = class extends mf.Effect {
     enable (tgt) {
         try {
             if (null !== this.width()) {
-                tgt.style({ width : this.width()[0] });
+                tgt.width(this.width()[0]);
             }
             if (null !== this.height()) {
-                tgt.style({ height : this.height()[0] });
+                tgt.height(this.height()[0]);
             }
         } catch (e) {
             console.error(e.stack);
@@ -52,10 +53,10 @@ mf.effect.Size = class extends mf.Effect {
     disable (tgt) {
         try {
             if (null !== this.width()) {
-                tgt.style({ width : this.width()[1] });
+                tgt.width(this.width()[1]);
             }
             if (null !== this.height()) {
-                tgt.style({ height : this.height()[1] });
+                tgt.height(this.height()[1]);
             }
         } catch (e) {
             console.error(e.stack);
