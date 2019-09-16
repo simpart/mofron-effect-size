@@ -9,9 +9,11 @@ mf.effect.Size = class extends mf.Effect {
     /**
      * initialize effect
      *
-     * @param p1 (object) effect option
-     * @param p1 (array) enable,disable width ([ena, dis])
-     * @param p2 (array) enable,disable height ([ena, dis])
+     * @param (mixed) width parameter
+     *                object: effect option
+     * @param (string (size)) height parameter 
+     * @pmap width,height
+     * @type private
      */
     constructor (po, p2) {
         try {
@@ -27,17 +29,17 @@ mf.effect.Size = class extends mf.Effect {
 
     
     /**
-     * enable size effect
+     * change size
      *
-     * @note private method
+     * @type private
      */
-    enable (tgt) {
+    contents (cmp) {
         try {
             if (null !== this.width()) {
-                tgt.width(this.width()[0]);
+                cmp.width(this.width());
             }
             if (null !== this.height()) {
-                tgt.height(this.height()[0]);
+                cmp.height(this.height());
             }
         } catch (e) {
             console.error(e.stack);
@@ -46,18 +48,15 @@ mf.effect.Size = class extends mf.Effect {
     }
     
     /**
-     * disable size effect
+     * width size
      *
-     * @note private method
+     * @param (string (size)) width
+     * @return (string (size)) width
+     * @type parameter
      */
-    disable (tgt) {
+    width (prm) {
         try {
-            if (null !== this.width()) {
-                tgt.width(this.width()[1]);
-            }
-            if (null !== this.height()) {
-                tgt.height(this.height()[1]);
-            }
+	    return this.member("width", "size", prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -65,61 +64,15 @@ mf.effect.Size = class extends mf.Effect {
     }
     
     /**
-     * width size setter/getter
+     * height size
      *
-     * @param p1 (string) enable width (css size value)
-     * @param p1 (undefined) call as getter
-     * @param p2 (string) disable width (css size value)
-     * @param p2 (undefined) call as getter
-     * @return (array) width (enable, disable)
+     * @param (string (size)) height
+     * @return (string (size)) height
+     * @type parameter
      */
-    width (en, dis) {
+    height (prm) {
         try {
-            if ( (undefined === en) && (undefined === dis) ) {
-                /* getter */
-                return (undefined === this.m_width) ? null : this.m_width;
-            }
-            /* setter */
-            if (undefined === this.m_width) {
-                this.m_width = [null, null];
-            }
-            if (undefined !== en) {
-                this.m_width[0] = mf.func.getSize(en).toString()
-            }
-            if (undefined !== dis) {
-                this.m_width[1] = mf.func.getSize(dis).toString();
-            }
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    /**
-     * height size setter/getter
-     *
-     * @param p1 (string) enable height (css size value)
-     * @param p1 (undefined) call as getter
-     * @param p2 (string) disable height (css size value)
-     * @param p2 (undefined) call as getter
-     * @return (array) height (enable, disable)
-     */
-    height (en, dis) {
-        try {
-            if ( (undefined === en) && (undefined === dis) ) {
-                /* getter */
-                return (undefined === this.m_height) ? null : this.m_height;
-            }
-            /* setter */
-            if (undefined === this.m_height) {
-                this.m_height = [null, null];
-            }
-            if (undefined !== en) {
-                this.m_height[0] = mf.func.getSize(en).toString()
-            }
-            if (undefined !== dis) {
-                this.m_height[1] = mf.func.getSize(dis).toString();
-            }
+	    return this.member("height", "size", prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
