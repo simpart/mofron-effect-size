@@ -1,6 +1,7 @@
 /**
  * @file mofron-effect-size/index.js
  * @brief size effect for mofron
+ * @attention speed parameter is invalid if the width or height specify null
  * @author simpart
  */
 const mf = require('mofron');
@@ -35,10 +36,11 @@ mf.effect.Size = class extends mf.Effect {
      */
     contents (cmp) {
         try {
-            if (null !== this.width()) {
+	    let sflg = this.sizeFlag();
+            if (true === sflg[0]) {
                 cmp.width(this.width());
             }
-            if (null !== this.height()) {
+            if (true === sflg[1]) {
                 cmp.height(this.height());
             }
         } catch (e) {
@@ -56,6 +58,9 @@ mf.effect.Size = class extends mf.Effect {
      */
     width (prm) {
         try {
+	    if (undefined !== prm) {
+                this.sizeFlag(true);
+	    }
 	    return this.member("width", "size", prm);
         } catch (e) {
             console.error(e.stack);
@@ -72,11 +77,41 @@ mf.effect.Size = class extends mf.Effect {
      */
     height (prm) {
         try {
+	    if (undefined !== prm) {
+                this.sizeFlag(undefined, true);
+	    }
 	    return this.member("height", "size", prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
+    }
+    
+    /**
+     * size flag for check default value
+     * 
+     * @param (boolean) true: width is not default value
+     * @param (boolean) true: heigh is not default value
+     * @return (array) size flag [(width flag), (height flag)]
+     * @type private
+     */
+    sizeFlag (wid,hei) {
+        try {
+            if ( (undefined === wid) && (undefined === hei) ) {
+                /* getter */
+		return (undefined === this.m_sizflg) ? [false,false] : this.m_sizflg;
+	    }
+	    let sflg = this.sizeFlag();
+	    if ('boolean' === typeof wid) {
+                sflg[0] = wid;
+	    } else if ('boolean' === typeof hei) {
+                sflg[1] = hei;
+	    }
+	    this.m_sizflg = sflg;
+	} catch (e) {
+	    console.error(e.stack);
+	    throw e;
+	}
     }
 }
 module.exports = mofron.effect.Size;
