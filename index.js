@@ -38,10 +38,16 @@ mf.effect.Size = class extends mf.Effect {
         try {
 	    let sflg = this.sizeFlag();
             if (true === sflg[0]) {
-                cmp.width(this.width());
+                cmp.width(
+		    this.width(),
+		    (true === this.forced()) ? {forced:true} : undefined
+		);
             }
             if (true === sflg[1]) {
-                cmp.height(this.height());
+                cmp.height(
+		    this.height(),
+		    (true === this.forced()) ? {forced:true} : undefined
+		);
             }
         } catch (e) {
             console.error(e.stack);
