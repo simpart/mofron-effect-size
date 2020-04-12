@@ -1,0 +1,10 @@
+<require>
+    <tag load="mofron-comp-frame">Frame</tag>
+    <tag load="mofron-effect-size">Size</tag>
+</require>
+
+<Frame>
+    <effect>
+        <Size speed=1000 delay=1000>(2rem,2rem)</Size>
+    </effect>
+</Frame>

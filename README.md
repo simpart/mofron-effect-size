@@ -11,10 +11,24 @@ size effect for mofron
 npm install mofron mofron-effect-size
 ```
 
+# Sample
+```html
+<require>
+    <tag load="mofron-comp-frame">Frame</tag>
+    <tag load="mofron-effect-size">Size</tag>
+</require>
+
+<Frame>
+    <effect>
+        <Size speed=1000 delay=1000>(2rem,2rem)</Size>
+    </effect>
+</Frame>
+```
+
 # Parameter
 
-|Simple<br>Param | Parameter Name | Type | Description |
-|:--------------:|:---------------|:-----|:------------|
-| | width | string (size) | width |
-| | height | string (size) | height |
+| Short<br>Form | Parameter Name | Type | Description |
+|:-------------:|:---------------|:-----|:------------|
+| ◯  | width | string (size) | width |
+| ◯  | height | string (size) | height |
 

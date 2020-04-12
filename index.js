@@ -2,26 +2,31 @@
  * @file mofron-effect-size/index.js
  * @brief size effect for mofron
  * @attention speed parameter is invalid if the width or height specify null
- * @author simpart
+ * @license MIT
  */
-const mf = require('mofron');
 
-mf.effect.Size = class extends mf.Effect {
+module.exports = class extends mofron.class.Effect {
     /**
      * initialize effect
      *
      * @param (mixed) width parameter
      *                object: effect option
      * @param (string (size)) height parameter 
-     * @pmap width,height
+     * @short width,height
      * @type private
      */
     constructor (po, p2) {
         try {
             super();
             this.name('Size');
-            this.prmMap(['width', 'height']);
-            this.prmOpt(po, p2);
+            this.shortForm('width', 'height');
+	    /* init config */
+	    this.confmng().add("width", { type: "size" });
+	    this.confmng().add("height", { type: "size" });
+	    /* set config */
+	    if (0 < arguments.length) {
+                this.config(po, p2);
+            }
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -36,19 +41,14 @@ mf.effect.Size = class extends mf.Effect {
      */
     contents (cmp) {
         try {
-	    let sflg = this.sizeFlag();
-            if (true === sflg[0]) {
-                cmp.width(
-		    this.width(),
-		    (true === this.forced()) ? {forced:true} : undefined
-		);
+	    /* set width */
+	    if (null !== this.width()) { 
+	        cmp.width(this.width());
             }
-            if (true === sflg[1]) {
-                cmp.height(
-		    this.height(),
-		    (true === this.forced()) ? {forced:true} : undefined
-		);
-            }
+            /* set height */
+            if (null !== this.height()) {
+                cmp.height(this.height());
+	    }
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -64,10 +64,7 @@ mf.effect.Size = class extends mf.Effect {
      */
     width (prm) {
         try {
-	    if (undefined !== prm) {
-                this.sizeFlag(true);
-	    }
-	    return this.member("width", "size", prm);
+	    return this.confmng("width", prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -83,42 +80,11 @@ mf.effect.Size = class extends mf.Effect {
      */
     height (prm) {
         try {
-	    if (undefined !== prm) {
-                this.sizeFlag(undefined, true);
-	    }
-	    return this.member("height", "size", prm);
+	    return this.confmng("height", prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
-    
-    /**
-     * size flag for check default value
-     * 
-     * @param (boolean) true: width is not default value
-     * @param (boolean) true: heigh is not default value
-     * @return (array) size flag [(width flag), (height flag)]
-     * @type private
-     */
-    sizeFlag (wid,hei) {
-        try {
-            if ( (undefined === wid) && (undefined === hei) ) {
-                /* getter */
-		return (undefined === this.m_sizflg) ? [false,false] : this.m_sizflg;
-	    }
-	    let sflg = this.sizeFlag();
-	    if ('boolean' === typeof wid) {
-                sflg[0] = wid;
-	    } else if ('boolean' === typeof hei) {
-                sflg[1] = hei;
-	    }
-	    this.m_sizflg = sflg;
-	} catch (e) {
-	    console.error(e.stack);
-	    throw e;
-	}
-    }
 }
-module.exports = mofron.effect.Size;
 /* end of file */
