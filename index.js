@@ -1,53 +1,51 @@
 /**
  * @file mofron-effect-size/index.js
  * @brief size effect for mofron
- * @attention speed parameter is invalid if the width or height specify null
  * @license MIT
  */
-
 module.exports = class extends mofron.class.Effect {
     /**
      * initialize effect
-     *
-     * @param (mixed) width parameter
-     *                object: effect option
-     * @param (string (size)) height parameter 
-     * @short width,height
+     * 
+     * @param (mixed) 
+     *                key-value: effect config
+     * @short
      * @type private
      */
-    constructor (po, p2) {
+    constructor (p1,p2) {
         try {
             super();
-            this.name('Size');
-            this.shortForm('width', 'height');
-	    /* init config */
-	    this.confmng().add("width", { type: "size" });
-	    this.confmng().add("height", { type: "size" });
-	    /* set config */
-	    if (0 < arguments.length) {
-                this.config(po, p2);
-            }
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
+            this.modname("Move");
+	    this.shortForm("fromSize", "toSize");
+            
+	    this.transition(["width","height"]);
+	    //this.transition("height");
+            
+            /* init config */
+	    this.confmng().add("fromWidth",  { type: "size" });
+	    this.confmng().add("toWidth",    { type: "size" });
+	    this.confmng().add("fromHeight", { type: "size" });
+	    this.confmng().add("toHeight",   { type: "size" });
+            
+            this.speed(1000);
+            this.beforeEvent(
+                (eff) => {
+                    try {
+		        let wid = eff.confmng("fromWidth");
+			let hei = eff.confmng("fronHeight");
+                        eff.component().style({
+                            "width"  : (null === wid) ? undefined : wid,
+			    "height" : (null === hei) ? undefined : hei
+			});
+                    } catch (e) {
+                        console.error(e.stack);
+                        throw e;
+                    }
+                }
+            );
 
-    
-    /**
-     * change size
-     *
-     * @type private
-     */
-    contents (cmp) {
-        try {
-	    /* set width */
-	    if (null !== this.width()) { 
-	        cmp.width(this.width());
-            }
-            /* set height */
-            if (null !== this.height()) {
-                cmp.height(this.height());
+	    if (0 < arguments.length) {
+                this.config(p1,p2);
 	    }
         } catch (e) {
             console.error(e.stack);
@@ -55,32 +53,32 @@ module.exports = class extends mofron.class.Effect {
         }
     }
     
-    /**
-     * width size
-     *
-     * @param (string (size)) width
-     * @return (string (size)) width
-     * @type parameter
-     */
-    width (prm) {
+    contents (cmp) {
         try {
-	    return this.confmng("width", prm);
-        } catch (e) {
+	    cmp.style({
+                'width'  : this.confmng("toWidth"),
+		'height' : this.confmng("toHeight")
+	    });
+	} catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
     
-    /**
-     * height size
-     *
-     * @param (string (size)) height
-     * @return (string (size)) height
-     * @type parameter
-     */
-    height (prm) {
+    fromSize (prm) {
         try {
-	    return this.confmng("height", prm);
+	    this.confmng("fromWidth", prm);
+            return this.confmng("fromHeight", prm);
+	} catch (e) {
+            console.error(e.stack);
+            throw e;
+	}
+    }
+    
+    toSize (prm) {
+        try {
+	    this.confmng("toWidth", prm);
+            return this.confmng("toHeight", prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
